@@ -1,0 +1,23 @@
+{% extends "layout.html" %} {% block body %}
+<table>
+  <tr>
+    <th>Card</th>
+    <th>Favourite</th>
+  </tr>
+  {% for card in cards %}
+  <tr>
+    <td>{{ card.name }}</td>
+    <td>{{ card.favourite }}</td>
+    <td>
+      <form
+        method="POST"
+        action="{{ url_for('cards_set_favourite', card_id=card.id)}}"
+      >
+        <input type="submit" value="change value" />
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

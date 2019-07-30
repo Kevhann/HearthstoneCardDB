@@ -1,0 +1,7 @@
+{% extends "layout.html" %} {% block body %}
+<form method="POST" action="{{ url_for('cards_create') }}">
+  <input type="text" name="name" />
+  <input type="submit" value="Add a new card" />
+</form>
+
+{% endblock %}

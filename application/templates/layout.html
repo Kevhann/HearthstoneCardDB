@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>HearthStone Cards</title>
+  </head>
+
+  <body>
+    <ul>
+      <li>
+        <a href="{{ url_for('cards_index') }}">List cards</a>
+      </li>
+      <li>
+        <a href="{{ url_for('cards_form') }}">Add a card</a>
+      </li>
+    </ul>
+    {% block body %}
+    <p>
+      Content.
+    </p>
+    {% endblock %}
+  </body>
+</html>
