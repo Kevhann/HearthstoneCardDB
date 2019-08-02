@@ -9,3 +9,7 @@ A project where a user can sort through their Hearthstone cards, create decks an
 ## Database schema
 
 ![schema](documentation/pictures/databaseSchema.png)
+
+## User stories
+
+[user stories](documentation/user-stories.md)
