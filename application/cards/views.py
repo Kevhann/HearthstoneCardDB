@@ -1,10 +1,11 @@
 from application import app, db
 from flask import render_template, request, url_for, redirect
 from application.cards.models import Card
+from application.cards.forms import CardForm
 
 @app.route("/cards/new")
 def cards_form():
-  return render_template("cards/new.html")
+  return render_template("cards/new.html", form = CardForm())
 
 @app.route("/cards/", methods=["POST"])
 def cards_create():
