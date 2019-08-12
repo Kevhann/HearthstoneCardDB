@@ -1,12 +1,12 @@
 {% extends "layout.html" %} {% block body %}
-<form method="POST" action="{{ url_for('cards_create') }}">
+<form method="POST" action="{{ url_for('cards_modify', card_id=card.id) }}">
   <table>
     <tr>
       <td>
         {{ form.name.label }}
       </td>
       <td>
-        {{ form.name }}
+        {{ form.name(value=card.name) }}
       </td>
     </tr>
     <tr>
@@ -14,7 +14,7 @@
         {{ form.mana.label }}
       </td>
       <td>
-        {{ form.mana }}
+        {{ form.mana(value=card.mana) }}
       </td>
     </tr>
     <tr>
@@ -23,7 +23,7 @@
       </td>
 
       <td>
-        {{ form.attack }}
+        {{ form.attack(value=card.attack) }}
       </td>
     </tr>
     <tr>
@@ -32,7 +32,7 @@
       </td>
 
       <td>
-        {{ form.defence }}
+        {{ form.defence(value=card.defence) }}
       </td>
     </tr>
     <tr>
@@ -40,7 +40,7 @@
         {{ form.rarity.label }}
       </td>
       <td>
-        {{ form.rarity }}
+        {{ form.rarity(value=card.rarity) }}
       </td>
     </tr>
     <tr>
@@ -48,7 +48,7 @@
         {{ form.card_class.label }}
       </td>
       <td>
-        {{ form.card_class }}
+        {{ form.card_class(value=card.card_class) }}
       </td>
     </tr>
     <tr>
@@ -56,7 +56,7 @@
         {{ form.text.label }}
       </td>
       <td>
-        {{ form.text }}
+        {{ form.text(value=card.text) }}
       </td>
     </tr>
     <tr>
@@ -67,7 +67,7 @@
     </tr>
     <tr>
       <td colspan="0">
-        <input type="submit" value="Create card" />
+        <input type="submit" value="Change values" />
       </td>
     </tr>
   </table>

@@ -2,18 +2,43 @@
 <table>
   <tr>
     <th>Card</th>
+    <th>Class</th>
+    <th>Mana</th>
+    <th>Attack</th>
+    <th>Defence</th>
     <th>Favourite</th>
   </tr>
   {% for card in cards %}
   <tr>
     <td>{{ card.name }}</td>
+    <td>{{ card.card_class }}</td>
+    <td>{{ card.mana }}</td>
+    <td>{{ card.attack }}</td>
+    <td>{{ card.defence }}</td>
     <td>{{ card.favourite }}</td>
+
     <td>
       <form
         method="POST"
         action="{{ url_for('cards_set_favourite', card_id=card.id)}}"
       >
-        <input type="submit" value="change value" />
+        <input type="submit" value="Make favourite" />
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="{{ url_for('cards_modify_form', card_id=card.id)}}">
+        Change values
+      </a>
+    </td>
+
+    <td>
+      <form
+        method="POST"
+        action="{{ url_for('cards_delete', card_id=card.id)}}"
+      >
+        <input type="submit" value="Delete" />
       </form>
     </td>
   </tr>

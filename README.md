@@ -6,6 +6,10 @@ A project where a user can sort through their Hearthstone cards, create decks an
 
 [Hearthstone card app](https://infinite-mountain-71662.herokuapp.com/)
 
+Login credentials for the app:
+Username: **test**
+Password: **user**
+
 ## Database schema
 
 ![schema](documentation/pictures/databaseSchema.png)
