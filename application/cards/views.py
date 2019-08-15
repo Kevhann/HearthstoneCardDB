@@ -1,6 +1,6 @@
 from application import app, db
 from flask import render_template, request, url_for, redirect
-from flask_login import login_required
+from flask_login import login_required, current_user
 from application.cards.models import Card
 from application.cards.forms import CardForm
 
@@ -23,6 +23,8 @@ def cards_create():
   card.defence = form.defence.data
   card.text = form.text.data
   card.tribe = form.tribe.data
+  card.account_id = current_user.id
+  
   db.session().add(card)
   db.session().commit()
 
@@ -37,12 +39,16 @@ def cards_set_favourite(card_id):
 
   return redirect(url_for("cards_index"))
 
-@app.route("/cards/modify/<card_id>/")
+@app.route("/cards/modify/<card_id>/", methods=["GET"])
 @login_required
 def cards_modify_form(card_id):
   card = Card.query.get(card_id)  
   return render_template("/cards/modify.html", form=CardForm(), card=card)
 
+@app.route("/cards/<card_id>/", methods=["GET"])
+def cards_view(card_id):
+  card = Card.query.get(card_id)  
+  return render_template("/cards/view.html", card=card)
 
 @app.route("/cards/modify/<card_id>/", methods=["POST"])
 @login_required
@@ -72,11 +78,6 @@ def cards_modify(card_id):
 @app.route("/cards/delete/<card_id>", methods=["POST"])
 @login_required
 def cards_delete(card_id):
-  print("AFBEBOTJAOFJOQNVOASNBOASFNBO")
-  print("AFBEBOTJAOFJOQNVOASNBOASFNBO")
-  print("AFBEBOTJAOFJOQNVOASNBOASFNBO")
-  print("AFBEBOTJAOFJOQNVOASNBOASFNBO")
-  print("AFBEBOTJAOFJOQNVOASNBOASFNBO")
 
   card = Card.query.get(card_id)
   db.session().delete(card)

@@ -12,6 +12,8 @@ class Card(db.Model):
 	favourite = db.Column(db.Boolean, nullable=False)
 	text = db.Column(db.String(255), nullable=True)
 
+	account_id = db.Column(db.Integer, db.ForeignKey("account.id"), nullable=False)
+
 
 	def __init__(self, name, card_class, mana, rarity):
 		self.name = name

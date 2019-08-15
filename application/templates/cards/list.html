@@ -6,7 +6,6 @@
     <th>Mana</th>
     <th>Attack</th>
     <th>Defence</th>
-    <th>Favourite</th>
   </tr>
   {% for card in cards %}
   <tr>
@@ -15,22 +14,33 @@
     <td>{{ card.mana }}</td>
     <td>{{ card.attack }}</td>
     <td>{{ card.defence }}</td>
-    <td>{{ card.favourite }}</td>
+
+    <td>
+      <form method="GET" action="{{ url_for('cards_view', card_id=card.id)}}">
+        <input type="submit" value="View" />
+      </form>
+    </td>
+
+    <td>
+      <form
+        method="GET"
+        action="{{ url_for('cards_modify_form', card_id=card.id)}}"
+      >
+        <input type="submit" value="Modify card" />
+      </form>
+    </td>
 
     <td>
       <form
         method="POST"
         action="{{ url_for('cards_set_favourite', card_id=card.id)}}"
       >
+        {% if card.favourite %}
+        <input type="submit" value="Unfavourite" />
+        {% else %}
         <input type="submit" value="Make favourite" />
+        {% endif %}
       </form>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="{{ url_for('cards_modify_form', card_id=card.id)}}">
-        Change values
-      </a>
     </td>
 
     <td>
