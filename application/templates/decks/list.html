@@ -1,0 +1,70 @@
+{% extends "layout.html" %} {% block body %} {% if current_user.is_authenticated
+%}
+<a href="{{ url_for('decks_index') }}">
+  <button type="button" class="btn btn-primary">Show all</button>
+</a>
+
+<a href="{{ url_for('decks_favourites') }}">
+  <button type="button" class="btn btn-primary">Show favourite</button>
+</a>
+<a href="{{ url_for('decks_own') }}">
+  <button type="button" class="btn btn-primary">Show own</button>
+</a>
+{% endif %} {% if not decks %}
+
+<h3>No decks</h3>
+
+{% else %}
+<table>
+  <tr>
+    <th>Deck</th>
+    <th>Class</th>
+    <th>Description</th>
+  </tr>
+  {% for deck in decks %}
+  <tr>
+    <td>{{ deck.name }}</td>
+    <td>{{ deck.deck_class }}</td>
+    <td>{{ deck.description }}</td>
+
+    <td>
+      <form method="GET" action="{{ url_for('decks_view', deck_id=deck.id)}}">
+        <input type="submit" value="View" />
+      </form>
+    </td>
+
+    <td>
+      <form
+        method="GET"
+        action="{{ url_for('decks_modify_form', deck_id=deck.id)}}"
+      >
+        <input type="submit" value="Modify deck" />
+      </form>
+    </td>
+
+    <td>
+      <form
+        method="POST"
+        action="{{ url_for('decks_set_favourite', deck_id=deck.id)}}"
+      >
+        {% if deck.favourite %}
+        <input type="submit" value="Unfavourite" />
+        {% else %}
+        <input type="submit" value="Make favourite" />
+        {% endif %}
+      </form>
+    </td>
+
+    <td>
+      <form
+        method="POST"
+        action="{{ url_for('decks_delete', deck_id=deck.id)}}"
+      >
+        <input type="submit" value="Delete" />
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endif %} {% endblock %}

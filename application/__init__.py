@@ -20,6 +20,9 @@ from application.cards import views
 from application.auth import models
 from application.auth import views
 
+from application.decks import models
+from application.decks import views
+
 from application.auth.models import User
 from os import urandom
 app.config["SECRET_KEY"] = urandom(32)

@@ -1,0 +1,38 @@
+{% extends "layout.html" %} {% block body %}
+
+<h2>
+  {{ deck.name }}
+</h2>
+
+<table>
+  <tr>
+    <td>
+      {{ deck.deck_class }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {{ deck.description }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {{ deck.favourite }}
+    </td>
+  </tr>
+</table>
+
+<h4>Cards in deck: {{ length }}</h4>
+
+<table>
+  {% for card in deck.cards %}
+  <tr>
+    <td>
+      {{ card.name }}
+    </td>
+  </tr>
+
+  {% endfor%}
+</table>
+
+{% endblock %}

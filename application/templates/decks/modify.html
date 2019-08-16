@@ -1,0 +1,51 @@
+{% extends "layout.html" %} {% block body %}
+<form method="POST" action="{{ url_for('decks_modify'), deck_id=deck.id }}">
+  <table>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td>
+        {{ form.name }}
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        {{ form.deck_class.label }}
+      </td>
+      <td>
+        {{ form.deck_class }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.description.label }}
+      </td>
+      <td>
+        {{ form.description }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.favourite.label }}
+        {{ form.favourite }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="0">
+        <input type="submit" value="Create deck" />
+      </td>
+    </tr>
+  </table>
+
+  <ul>
+    {% for error in form.name.errors %}
+    <li>
+      {{ error }}
+    </li>
+    {% endfor %}
+  </ul>
+</form>
+
+{% endblock %}

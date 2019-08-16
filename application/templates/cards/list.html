@@ -1,4 +1,24 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} {% block body %} {% if current_user.is_authenticated
+%}
+
+<div>
+  <a href="{{ url_for('cards_index') }}">
+    <button type="button" class="btn btn-primary">Show all</button>
+  </a>
+
+  <a href="{{ url_for('cards_favourites') }}">
+    <button type="button" class="btn btn-primary">Show favourite</button>
+  </a>
+  <a href="{{ url_for('cards_own') }}">
+    <button type="button" class="btn btn-primary">Show own</button>
+  </a>
+  <span class="badge badge-secondary">{{ cards_by_user }} cards created</span>
+</div>
+{% endif %} {% if not cards %}
+
+<h3>No cards</h3>
+
+{% else %}
 <table>
   <tr>
     <th>Card</th>
@@ -46,6 +66,33 @@
     <td>
       <form
         method="POST"
+        action="{{ url_for('decks_add_card_to_deck', card_id=card.id)}}"
+      >
+        <div class="form-row align-items-center">
+          <div class="col-auto my-1">
+            <select
+              name="deck_id"
+              class="custom-select mr-sm-2"
+              id="inlineFormCustomSelect"
+            >
+              <option selected>Choose deck</option>
+              {% for deck in decks %}
+              <option value="{{ deck.id }}">{{ deck.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-auto my-1">
+            <button type="submit" class="btn btn-primary">
+              Add card to deck
+            </button>
+          </div>
+        </div>
+      </form>
+    </td>
+
+    <td>
+      <form
+        method="POST"
         action="{{ url_for('cards_delete', card_id=card.id)}}"
       >
         <input type="submit" value="Delete" />
@@ -55,4 +102,4 @@
   {% endfor %}
 </table>
 
-{% endblock %}
+{% endif %} {% endblock %}
