@@ -41,19 +41,14 @@ def decks_set_favourite(deck_id):
 @app.route("/decks/<card_id>/", methods=["POST"])
 def decks_add_card_to_deck(card_id):
 
-
   deck_id = request.form['deck_id']
-  card = Card.query.get(card_id)
-  deck = Deck.query.get(deck_id)
-  deck.cards.append(card)
-  
-  db.session.commit()
+  if deck_id != "Choose deck":
+    card = Card.query.get(card_id)
+    deck = Deck.query.get(deck_id)
+    deck.cards.append(card)
+    db.session.commit()
 
-    
   return redirect(url_for("cards_index"))
-
-
-
 
 @app.route("/decks/modify/<deck_id>/", methods=["GET"])
 @login_required
@@ -95,24 +90,29 @@ def decks_delete(deck_id):
 
   return redirect(url_for("decks_index"))
 
-
-
-
 @app.route("/decks/", methods=["GET"])
 def decks_index():
-  return render_template("decks/list.html", decks = Deck.query.all())
+  decks = Deck.get_all()
+  decks_by_user = ""
+  if current_user.is_authenticated:
+    decks_by_user = Deck.count_by_current_user()
+  return render_template("decks/list.html", decks = decks, decks_by_user = decks_by_user)
 
 @app.route("/decks/user/", methods=["GET"])
 def decks_own():
-  statement = text("SELECT * FROM Deck "
-                    "WHERE deck.account_id = :account_id").params(account_id = current_user.id)
-  decks = db.engine.execute(statement)
-  return render_template("decks/list.html", decks = decks)
+  decks = Deck.by_current_user()
+  decks_by_user = ""
+  if current_user.is_authenticated:
+    decks_by_user = Deck.count_by_current_user()
+
+  return render_template("decks/list.html", decks = decks, decks_by_user = decks_by_user)
 
 
 @app.route("/decks/favourite/", methods=["GET"])
 def decks_favourites():
-  statement = text("SELECT * FROM Deck "
-                    "WHERE favourite = 1")
-  decks = db.engine.execute(statement)
-  return render_template("decks/list.html", decks = decks)
+  decks = Deck.favourites()
+  decks_by_user = ""
+  if current_user.is_authenticated:
+    decks_by_user = Deck.count_by_current_user()
+
+  return render_template("decks/list.html", decks = decks, decks_by_user = decks_by_user)

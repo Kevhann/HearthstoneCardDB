@@ -24,15 +24,47 @@
 
 <h4>Cards in deck: {{ length }}</h4>
 
+{% if not deck.cards %}
+
+<h3>No cards</h3>
+
+{% else %}
 <table>
+  <tr>
+    <th>Card</th>
+    <th>Class</th>
+    <th>Mana</th>
+    <th>Attack</th>
+    <th>Defence</th>
+  </tr>
   {% for card in deck.cards %}
   <tr>
+    <td>{{ card.name }}</td>
+    <td>{{ card.card_class }}</td>
+    <td>{{ card.mana }}</td>
+    <td>{{ card.attack }}</td>
+    <td>{{ card.defence }}</td>
+
     <td>
-      {{ card.name }}
+      <form method="GET" action="{{ url_for('cards_view', card_id=card.id)}}">
+        <input type="submit" value="View" />
+      </form>
+    </td>
+
+    <td>
+      <form
+        method="POST"
+        action="{{ url_for('cards_set_favourite', card_id=card.id)}}"
+      >
+        {% if card.favourite %}
+        <input type="submit" value="Unfavourite" />
+        {% else %}
+        <input type="submit" value="Favourite" />
+        {% endif %}
+      </form>
     </td>
   </tr>
-
-  {% endfor%}
+  {% endfor %}
 </table>
 
-{% endblock %}
+{% endif %} {% endblock %}

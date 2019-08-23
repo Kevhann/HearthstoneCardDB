@@ -11,12 +11,15 @@
     
   </tr>
   <tr>
+    <td>Mana</td>
     <td>
       {{ card.mana }}
     </td>
    
   </tr>
   <tr>
+    <td>Attack</td>
+
     <td>
       {{ card.attack }}
     </td>
@@ -24,33 +27,67 @@
    
   </tr>
   <tr>
+    <td>Defence</td>
+
     <td>
       {{ card.defence }}
     </td>
 
   </tr>
   <tr>
+    <td>Rarity</td>
+
     <td>
       {{ card.rarity }}
     </td>
   
   </tr>
   <tr>
+    <td>Class</td>
+
     <td>
       {{ card.card_class }}
     </td>
     
   </tr>
   <tr>
+    <td>Text</td>
+
     <td>
       {{ card.text }}
     </td>
    
   </tr>
+  
+  {% for attribute in card.attributes %}
   <tr>
     <td>
-      {{ card.favourite }}
+      {{ attribute.name }}
     </td>
+  </tr>
+  {% endfor %}
+  <tr>
+    {% if card.favourite %}
+    <td>
+      Favourite
+    </td>
+    {% else %}
+    <td>
+      Not in favourites
+    </td>
+    {% endif %}
+  </tr>
+  <tr>
+  <td>
+    <form method="POST" action="{{ url_for('cards_delete', card_id=card.id)}}">
+      <input type="submit" value="Delete" />
+    </form>
+  </td>
+  <td>
+    <form method="GET" action="{{ url_for('cards_modify_form', card_id=card.id)}}">
+      <input type="submit" value="Modify card" />
+    </form>
+  </td>
   </tr>
   
 </table>

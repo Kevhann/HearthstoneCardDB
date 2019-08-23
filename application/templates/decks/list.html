@@ -10,6 +10,8 @@
 <a href="{{ url_for('decks_own') }}">
   <button type="button" class="btn btn-primary">Show own</button>
 </a>
+<span class="badge badge-secondary">{{ decks_by_user }} decks created</span>
+
 {% endif %} {% if not decks %}
 
 <h3>No decks</h3>

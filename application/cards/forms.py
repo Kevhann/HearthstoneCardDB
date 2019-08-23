@@ -10,7 +10,14 @@ class CardForm(FlaskForm):
   rarity = SelectField(u"Rarity", choices=[("Free","Free"),("Common", "Common"),("Rare", "Rare"),("Epic", "Epic"),("Legendary", "Legenadry")])
   card_class = SelectField(u"Class", choices=[("Neutral","Neutral"),("Druid","Druid"),("Hunter","Hunter"),("Mage","Mage"),("Paladin","Paladin"),("Priest","Priest"),("Rogue","Rogue"),("Shaman","Shaman"),("Warrior","Warrior"),("Warlock","Warlock")])
   tribe = StringField("Card tribe")
+
+  taunt = BooleanField("Taunt")
+  charge = BooleanField("Charge")
+  divine_shield = BooleanField("Divine shield")
+  battlecry = BooleanField("Battlecry")
+  deathrattle = BooleanField("Deathrattle")
   favourite = BooleanField("Favourite")
+  
   class Meta:
     csrf = False
 

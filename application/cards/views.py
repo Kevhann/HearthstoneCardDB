@@ -1,7 +1,7 @@
 from application import app, db
 from flask import render_template, request, url_for, redirect
 from flask_login import login_required, current_user
-from application.cards.models import Card
+from application.cards.models import Card, Attribute
 from application.decks.models import Deck
 
 from application.cards.forms import CardForm
@@ -30,6 +30,26 @@ def cards_create():
   card.tribe = form.tribe.data
   card.account_id = current_user.id
 
+  if form.taunt.data:
+    attribute = Attribute("taunt")
+    card.attributes.append(attribute)
+
+  if form.charge.data:
+    attribute = Attribute("charge")
+    card.attributes.append(attribute)
+
+  if form.divine_shield.data:
+    attribute = Attribute("divine_shield")
+    card.attributes.append(attribute)
+  
+  if form.battlecry.data:
+    attribute = Attribute("battlecry")
+    card.attributes.append(attribute)
+
+  if form.deathrattle.data:
+    attribute = Attribute("deathrattle")
+    card.attributes.append(attribute)
+  
   db.session().add(card)
   db.session().commit()
 
@@ -47,8 +67,10 @@ def cards_set_favourite(card_id):
 @app.route("/cards/modify/<card_id>/", methods=["GET"])
 @login_required
 def cards_modify_form(card_id):
-  card = Card.query.get(card_id)  
-  return render_template("/cards/modify.html", form=CardForm(), card=card)
+  card = Card.query.get(card_id)
+  if card.account_id == current_user.id:
+    return render_template("/cards/modify.html", form=CardForm(), card=card)
+  return redirect(url_for("cards_index"))
 
 @app.route("/cards/<card_id>/", methods=["GET"])
 def cards_view(card_id):
@@ -63,8 +85,6 @@ def cards_modify(card_id):
   
   if not form.validate():
     return render_template("cards/modify.html", form = form)
-  
-
 
   card.name = form.name.data
   card.card_class = form.card_class.data
@@ -85,8 +105,9 @@ def cards_modify(card_id):
 def cards_delete(card_id):
 
   card = Card.query.get(card_id)
-  db.session().delete(card)
-  db.session().commit()
+  if card.account_id == current_user.id:
+    db.session().delete(card)
+    db.session().commit()
 
   return redirect(url_for("cards_index"))
 
@@ -94,35 +115,36 @@ def cards_delete(card_id):
 @app.route("/cards/", methods=["GET"])
 def cards_index():
   
-  cards = Card.query.all()
+  cards = Card.get_all()
   decks = Deck.query.all()
 
   cards_by_user = ""
   
   if current_user.is_authenticated:
-    statement = text("Select Count(Account.id) AS count From Account JOIN Card "
-                      "ON Card.account_id = Account.id WHERE Account.id = :account_id").params(account_id = current_user.id)
-    result = db.engine.execute(statement).fetchone()
-    cards_by_user = result['count']
+    cards_by_user = Card.count_by_current_user()
 
   return render_template("cards/list.html", cards = cards, decks = decks, cards_by_user = cards_by_user)
 
 
 @app.route("/cards/user/", methods=["GET"])
 def cards_own():
-  statement = text("SELECT * FROM Card "
-                    "WHERE card.account_id = :account_id").params(account_id = current_user.id)
-  cards = db.engine.execute(statement)
-  decks = Deck.query.all()
+  cards = Card.by_current_user()
 
-  return render_template("cards/list.html", cards = cards, decks = decks)
+  decks = Deck.query.all()
+  cards_by_user = ""
+
+  if current_user.is_authenticated:
+    cards_by_user = Card.count_by_current_user()
+  return render_template("cards/list.html", cards = cards, decks = decks, cards_by_user = cards_by_user)
 
 
 @app.route("/cards/favourite/", methods=["GET"])
 def cards_favourites():
-  statement = text("SELECT * FROM Card "
-                    "WHERE favourite = 1")
-  cards = db.engine.execute(statement)
+  cards = Card.favourites()
+  cards_by_user = ""
+
+  if current_user.is_authenticated:
+    cards_by_user = Card.count_by_current_user()
   decks = Deck.query.all()
 
-  return render_template("cards/list.html", cards = cards, decks = decks)
+  return render_template("cards/list.html", cards = cards, decks = decks, cards_by_user = cards_by_user)

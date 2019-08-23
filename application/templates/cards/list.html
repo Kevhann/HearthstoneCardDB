@@ -43,22 +43,13 @@
 
     <td>
       <form
-        method="GET"
-        action="{{ url_for('cards_modify_form', card_id=card.id)}}"
-      >
-        <input type="submit" value="Modify card" />
-      </form>
-    </td>
-
-    <td>
-      <form
         method="POST"
         action="{{ url_for('cards_set_favourite', card_id=card.id)}}"
       >
         {% if card.favourite %}
         <input type="submit" value="Unfavourite" />
         {% else %}
-        <input type="submit" value="Make favourite" />
+        <input type="submit" value="Favourite" />
         {% endif %}
       </form>
     </td>
@@ -76,9 +67,10 @@
               id="inlineFormCustomSelect"
             >
               <option selected>Choose deck</option>
-              {% for deck in decks %}
+              {% for deck in decks %} {% if deck.deck_class == card.card_class
+              or card.card_class == "Neutral" %}
               <option value="{{ deck.id }}">{{ deck.name }}</option>
-              {% endfor %}
+              {% endif %} {% endfor %}
             </select>
           </div>
           <div class="col-auto my-1">
@@ -87,15 +79,6 @@
             </button>
           </div>
         </div>
-      </form>
-    </td>
-
-    <td>
-      <form
-        method="POST"
-        action="{{ url_for('cards_delete', card_id=card.id)}}"
-      >
-        <input type="submit" value="Delete" />
       </form>
     </td>
   </tr>
