@@ -12,8 +12,12 @@ Password: **user**
 
 ## Database schema
 
-![schema](documentation/pictures/databaseSchema.png)
+![Up to date schema](documentation/pictures/updated_db_diagram.png)
 
-## User stories
+## Documentation
 
 [user stories](documentation/user-stories.md)
+
+[Instructions](documentation/instructions.md)
+
+[Installation guide](documentation/installation.md)
