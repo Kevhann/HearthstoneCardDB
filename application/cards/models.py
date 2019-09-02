@@ -45,22 +45,19 @@ class Card(db.Model):
     return result['count']
 
   def get_all():
-    statement = text("Select * From Card "
-                      "GROUP BY mana")
+    statement = text("Select * From Card")
     result = db.engine.execute(statement).fetchall()
     return result
 
   def favourites():
     statement = text("SELECT * FROM Card "
-                    "WHERE favourite = 1 "
-                    "GROUP BY mana")
+                    "WHERE favourite = 1")
     cards = db.engine.execute(statement)
     return cards
     
   def by_current_user():
     statement = text("SELECT * FROM Card "
-                    "WHERE card.account_id = :account_id "
-                    "GROUP BY mana").params(account_id = current_user.id)
+                    "WHERE card.account_id = :account_id").params(account_id = current_user.id)
     cards = db.engine.execute(statement)
     return cards
   
