@@ -34,21 +34,18 @@ class Deck(db.Model):
     return result['count']
 
   def get_all():
-    statement = text("Select * From Deck "
-                      "GROUP BY name")
+    statement = text("Select * From Deck")
     result = db.engine.execute(statement).fetchall()
     return result
 
   def favourites():
     statement = text("SELECT * FROM Deck "
-                    "WHERE favourite = 1 "
-                    "GROUP BY name")
+                    "WHERE favourite = 1")
     decks = db.engine.execute(statement)
     return decks
     
   def by_current_user():
     statement = text("SELECT * FROM Deck "
-                    "WHERE deck.account_id = :account_id "
-                    "GROUP BY name").params(account_id = current_user.id)
+                    "WHERE deck.account_id = :account_id").params(account_id = current_user.id)
     decks = db.engine.execute(statement)
     return decks
