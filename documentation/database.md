@@ -5,7 +5,8 @@
 
 ### Create Tabe Statements
 
-```CREATE TABLE attribute (
+```
+CREATE TABLE attribute (
 	id INTEGER NOT NULL, 
 	name VARCHAR(144) NOT NULL, 
 	PRIMARY KEY (id)
@@ -61,4 +62,5 @@ CREATE TABLE cards (
 	PRIMARY KEY (deck_id, card_id), 
 	FOREIGN KEY(deck_id) REFERENCES deck (id), 
 	FOREIGN KEY(card_id) REFERENCES card (id)
-);```
+);
+```
