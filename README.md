@@ -10,11 +10,10 @@ Login credentials for the app:
 Username: **test**
 Password: **user**
 
-## Database schema
-
-![Up to date schema](documentation/pictures/updated_db_diagram.png)
 
 ## Documentation
+
+[database schema](documentation/database.md)
 
 [user stories](documentation/user-stories.md)
 
