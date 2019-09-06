@@ -20,3 +20,10 @@ Password: **user**
 [Instructions](documentation/instructions.md)
 
 [Installation guide](documentation/installation.md)
+
+## Missing features
+
+* A card can be only added once into a selected deck
+* Cards cannot be removed from the decks
+* Decks have no limit as to how many cards can be in them
+* Overall appearence of the site

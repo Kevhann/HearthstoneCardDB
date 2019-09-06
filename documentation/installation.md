@@ -11,3 +11,35 @@
 5. Launch the project with command `python run.py`
 
 ### Launch to heroku
+
+Before launching to heroku, you need to have the files in your local git repository. If you cloned the repo, you need to delete the old .git folder. Create a new git repo with
+
+```git create```
+
+Create a new heroku project
+
+```heroku create```
+
+It should return with the name of your project in the format of 
+
+```https://git.heroku.com/your-project-name.git```
+
+Add the remote to your local git
+
+```git remote add heroku https://git.heroku.com/your-project-name.git```
+
+Add some configuration for heroku
+
+```heroku config:set HEROKU=1```
+
+Add a database to heroku
+
+```heroku addons:add heroku-postgresql:hobby-dev```
+
+Add and commit
+```git add .```
+```git commit -m "heroku"```
+
+Push your project to heroku
+
+```git push heroku master```
