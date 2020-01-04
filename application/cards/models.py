@@ -51,7 +51,7 @@ class Card(db.Model):
 
   def favourites():
     statement = text("SELECT * FROM Card "
-                    "WHERE favourite = 1")
+                    "WHERE favourite = '1'")
     cards = db.engine.execute(statement)
     return cards
     

@@ -40,7 +40,7 @@ class Deck(db.Model):
 
   def favourites():
     statement = text("SELECT * FROM Deck "
-                    "WHERE favourite = 1")
+                    "WHERE favourite = '1'")
     decks = db.engine.execute(statement)
     return decks
     
